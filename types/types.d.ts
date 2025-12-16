@@ -8239,23 +8239,6 @@ export interface BrowserContext {
   on(event: 'dialog', listener: (dialog: Dialog) => any): this;
 
   /**
-   * Emits when any action is performed during recording.
-   * - `action`: The details of the action performed.
-   *
-   * **Usage**
-   *
-   * ```js
-   *   const page:Page = await browser.newPage();
-   *
-   *   page.context().on('onaction', (data:Object) => {
-   *       console.log('onaction', data);
-   *   });
-   * ```
-   *
-   */
-  on(event: 'onaction', listener: (object: Object) => any): this;
-
-  /**
    * The event is emitted when a new Page is created in the BrowserContext. The page may still be loading. The event
    * will also fire for popup pages. See also
    * [page.on('popup')](https://playwright.dev/docs/api/class-page#page-event-popup) to receive events about popups
@@ -8359,11 +8342,6 @@ export interface BrowserContext {
   /**
    * Adds an event listener that will be automatically removed after it is triggered once. See `addListener` for more information about this event.
    */
-  once(event: 'onaction', listener: (object: Object) => any): this;
-
-  /**
-   * Adds an event listener that will be automatically removed after it is triggered once. See `addListener` for more information about this event.
-   */
   once(event: 'page', listener: (page: Page) => any): this;
 
   /**
@@ -8458,23 +8436,6 @@ export interface BrowserContext {
    *
    */
   addListener(event: 'dialog', listener: (dialog: Dialog) => any): this;
-
-  /**
-   * Emits when any action is performed during recording.
-   * - `action`: The details of the action performed.
-   *
-   * **Usage**
-   *
-   * ```js
-   *   const page:Page = await browser.newPage();
-   *
-   *   page.context().on('onaction', (data:Object) => {
-   *       console.log('onaction', data);
-   *   });
-   * ```
-   *
-   */
-  addListener(event: 'onaction', listener: (object: Object) => any): this;
 
   /**
    * The event is emitted when a new Page is created in the BrowserContext. The page may still be loading. The event
@@ -8580,11 +8541,6 @@ export interface BrowserContext {
   /**
    * Removes an event listener added by `on` or `addListener`.
    */
-  removeListener(event: 'onaction', listener: (object: Object) => any): this;
-
-  /**
-   * Removes an event listener added by `on` or `addListener`.
-   */
   removeListener(event: 'page', listener: (page: Page) => any): this;
 
   /**
@@ -8636,11 +8592,6 @@ export interface BrowserContext {
    * Removes an event listener added by `on` or `addListener`.
    */
   off(event: 'dialog', listener: (dialog: Dialog) => any): this;
-
-  /**
-   * Removes an event listener added by `on` or `addListener`.
-   */
-  off(event: 'onaction', listener: (object: Object) => any): this;
 
   /**
    * Removes an event listener added by `on` or `addListener`.
@@ -8739,23 +8690,6 @@ export interface BrowserContext {
    *
    */
   prependListener(event: 'dialog', listener: (dialog: Dialog) => any): this;
-
-  /**
-   * Emits when any action is performed during recording.
-   * - `action`: The details of the action performed.
-   *
-   * **Usage**
-   *
-   * ```js
-   *   const page:Page = await browser.newPage();
-   *
-   *   page.context().on('onaction', (data:Object) => {
-   *       console.log('onaction', data);
-   *   });
-   * ```
-   *
-   */
-  prependListener(event: 'onaction', listener: (object: Object) => any): this;
 
   /**
    * The event is emitted when a new Page is created in the BrowserContext. The page may still be loading. The event
@@ -9056,46 +8990,6 @@ export interface BrowserContext {
   }): Promise<void>;
 
   /**
-   * Method to retrieve the locator mode status. It returns true if locator mode is active; otherwise, it returns false.
-   *
-   * **Usage**
-   *
-   * ```js
-   * const context = await browser.newContext();
-   * const result: boolean = = await context.isLocatorModeActive();
-   * ```
-   *
-   */
-  isLocatorModeActive(): Promise<boolean>;
-
-  /**
-   * Method to retrieve the debugger pause status.
-   *
-   * **Usage**
-   *
-   * ```js
-   * const context = await browser.newContext();
-   * const result: boolean = = await context.isPauseMode();
-   * ```
-   *
-   */
-  isPauseMode(): Promise<boolean>;
-
-  /**
-   * Method to retrieve the recording status. It returns a boolean: true if recording is currently active, and false if
-   * it is not.
-   *
-   * **Usage**
-   *
-   * ```js
-   * const context = await browser.newContext();
-   * const result: boolean = = await context.isRecord();
-   * ```
-   *
-   */
-  isRecord(): Promise<boolean>;
-
-  /**
    * **NOTE** CDP sessions are only supported on Chromium-based browsers.
    *
    * Returns the newly created session.
@@ -9366,62 +9260,6 @@ export interface BrowserContext {
   setOffline(offline: boolean): Promise<void>;
 
   /**
-   * Method to set the mode to locator mode if the page is paused. If the page is not paused, the request will simply be
-   * ignored.
-   *
-   * **Usage**
-   *
-   * ```js
-   * const context = await browser.newContext();
-   * await context.setToLocatorMode();
-   * ```
-   *
-   */
-  setToLocatorMode(): Promise<void>;
-
-  /**
-   * Method to set the mode to Standby mode if the page is paused. If the page is not paused, the request will simply be
-   * ignored.
-   *
-   * **Usage**
-   *
-   * ```js
-   * const context = await browser.newContext();
-   * await context.setToStandbyMode();
-   * ```
-   *
-   */
-  setToStandbyMode(): Promise<void>;
-
-  /**
-   * Method to start recording user actions if the page is paused. If the page is not paused, it will simply ignore the
-   * request.
-   *
-   * **Usage**
-   *
-   * ```js
-   * const context = await browser.newContext();
-   * await context.startRecord();
-   * ```
-   *
-   */
-  startRecord(): Promise<void>;
-
-  /**
-   * Method to stop recording user actions if it is currently recording. If the page is not recording, it will simply
-   * ignore the request.
-   *
-   * **Usage**
-   *
-   * ```js
-   * const context = await browser.newContext();
-   * await context.stopRecord();
-   * ```
-   *
-   */
-  stopRecord(): Promise<void>;
-
-  /**
    * Returns storage state for this browser context, contains current cookies and local storage snapshot.
    * @param options
    */
@@ -9560,23 +9398,6 @@ export interface BrowserContext {
    *
    */
   waitForEvent(event: 'dialog', optionsOrPredicate?: { predicate?: (dialog: Dialog) => boolean | Promise<boolean>, timeout?: number } | ((dialog: Dialog) => boolean | Promise<boolean>)): Promise<Dialog>;
-
-  /**
-   * Emits when any action is performed during recording.
-   * - `action`: The details of the action performed.
-   *
-   * **Usage**
-   *
-   * ```js
-   *   const page:Page = await browser.newPage();
-   *
-   *   page.context().on('onaction', (data:Object) => {
-   *       console.log('onaction', data);
-   *   });
-   * ```
-   *
-   */
-  waitForEvent(event: 'onaction', optionsOrPredicate?: { predicate?: (object: Object) => boolean | Promise<boolean>, timeout?: number } | ((object: Object) => boolean | Promise<boolean>)): Promise<Object>;
 
   /**
    * The event is emitted when a new Page is created in the BrowserContext. The page may still be loading. The event
@@ -12608,7 +12429,7 @@ export interface Locator {
 
   /**
    * Captures the aria snapshot of the given element. Read more about [aria snapshots](https://playwright.dev/docs/aria-snapshots) and
-   * [expect(locator).toMatchAriaSnapshot(expected[, options])](https://playwright.dev/docs/api/class-locatorassertions#locator-assertions-to-match-aria-snapshot-2)
+   * [expect(locator).toMatchAriaSnapshot(expected[, options])](https://playwright.dev/docs/api/class-locatorassertions#locator-assertions-to-match-aria-snapshot)
    * for the corresponding assertion.
    *
    * **Usage**
@@ -13094,7 +12915,6 @@ export interface Locator {
    * live objects to be passed into the event:
    *
    * ```js
-   * // Note you can only create DataTransfer in Chromium and Firefox
    * const dataTransfer = await page.evaluateHandle(() => new DataTransfer());
    * await locator.dispatchEvent('dragstart', { dataTransfer });
    * ```
@@ -14746,6 +14566,11 @@ export interface BrowserType<Unused = {}> {
    *
    * **NOTE** Connecting over the Chrome DevTools Protocol is only supported for Chromium-based browsers.
    *
+   * **NOTE** This connection is significantly lower fidelity than the Playwright protocol connection via
+   * [browserType.connect(wsEndpoint[, options])](https://playwright.dev/docs/api/class-browsertype#browser-type-connect).
+   * If you are experiencing issues or attempting to use advanced functionality, you probably want to use
+   * [browserType.connect(wsEndpoint[, options])](https://playwright.dev/docs/api/class-browsertype#browser-type-connect).
+   *
    * **Usage**
    *
    * ```js
@@ -14771,6 +14596,11 @@ export interface BrowserType<Unused = {}> {
    *
    * **NOTE** Connecting over the Chrome DevTools Protocol is only supported for Chromium-based browsers.
    *
+   * **NOTE** This connection is significantly lower fidelity than the Playwright protocol connection via
+   * [browserType.connect(wsEndpoint[, options])](https://playwright.dev/docs/api/class-browsertype#browser-type-connect).
+   * If you are experiencing issues or attempting to use advanced functionality, you probably want to use
+   * [browserType.connect(wsEndpoint[, options])](https://playwright.dev/docs/api/class-browsertype#browser-type-connect).
+   *
    * **Usage**
    *
    * ```js
@@ -14785,10 +14615,14 @@ export interface BrowserType<Unused = {}> {
    */
   connectOverCDP(options: ConnectOverCDPOptions & { wsEndpoint?: string }): Promise<Browser>;
   /**
-   * This method attaches Playwright to an existing browser instance. When connecting to another browser launched via
-   * `BrowserType.launchServer` in Node.js, the major and minor version needs to match the client version (1.2.3 → is
-   * compatible with 1.2.x).
-   * @param wsEndpoint A browser websocket endpoint to connect to.
+   * This method attaches Playwright to an existing browser instance created via
+   * [browserType.launchServer([options])](https://playwright.dev/docs/api/class-browsertype#browser-type-launch-server).
+   *
+   * **NOTE** The major and minor version of the Playwright instance that connects needs to match the version of
+   * Playwright that launches the browser (1.2.3 → is compatible with 1.2.x).
+   *
+   * @param wsEndpoint A Playwright browser websocket endpoint to connect to. You obtain this endpoint via
+   * [browserServer.wsEndpoint()](https://playwright.dev/docs/api/class-browserserver#browser-server-ws-endpoint).
    * @param options
    */
   connect(wsEndpoint: string, options?: ConnectOptions): Promise<Browser>;
@@ -14799,10 +14633,14 @@ export interface BrowserType<Unused = {}> {
    * @deprecated
    */
   /**
-   * This method attaches Playwright to an existing browser instance. When connecting to another browser launched via
-   * `BrowserType.launchServer` in Node.js, the major and minor version needs to match the client version (1.2.3 → is
-   * compatible with 1.2.x).
-   * @param wsEndpoint A browser websocket endpoint to connect to.
+   * This method attaches Playwright to an existing browser instance created via
+   * [browserType.launchServer([options])](https://playwright.dev/docs/api/class-browsertype#browser-type-launch-server).
+   *
+   * **NOTE** The major and minor version of the Playwright instance that connects needs to match the version of
+   * Playwright that launches the browser (1.2.3 → is compatible with 1.2.x).
+   *
+   * @param wsEndpoint A Playwright browser websocket endpoint to connect to. You obtain this endpoint via
+   * [browserServer.wsEndpoint()](https://playwright.dev/docs/api/class-browserserver#browser-server-ws-endpoint).
    * @param options
    */
   connect(options: ConnectOptions & { wsEndpoint?: string }): Promise<Browser>;
@@ -16788,11 +16626,6 @@ export interface AndroidDevice {
     colorScheme?: null|"light"|"dark"|"no-preference";
 
     /**
-     * Optional package name to launch instead of default Chrome for Android.
-     */
-    command?: string;
-
-    /**
      * Specify device scale factor (can be thought of as dpr). Defaults to `1`. Learn more about
      * [emulating devices with device scale factor](https://playwright.dev/docs/emulation#devices).
      */
@@ -16899,6 +16732,11 @@ export interface AndroidDevice {
      * for more details. Defaults to none.
      */
     permissions?: Array<string>;
+
+    /**
+     * Optional package name to launch instead of default Chrome for Android.
+     */
+    pkg?: string;
 
     /**
      * Network proxy settings.

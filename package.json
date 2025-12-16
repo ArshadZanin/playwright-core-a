@@ -1,6 +1,6 @@
 {
-  "name": "playwright-core-a",
-  "version": "1.50.0-next",
+  "name": "playwright-core",
+  "version": "1.50.1",
   "description": "A high-level API to automate web browsers",
   "repository": {
     "type": "git",
@@ -38,7 +38,7 @@
     "./types/structs": "./types/structs.d.ts"
   },
   "bin": {
-    "playwright-core-a": "cli.js"
+    "playwright-core": "cli.js"
   },
   "types": "types/types.d.ts"
 }
